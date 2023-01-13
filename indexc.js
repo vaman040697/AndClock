@@ -2,6 +2,10 @@ const degree = 6;
 // Get the current time
 var date = new Date();
 //date.setHours();
+
+let lat;
+let lng;
+
 var hour = date.getHours();
 const hr = document.querySelector('#hr');
 const min = document.querySelector('#min');
@@ -28,6 +32,23 @@ setInterval(() =>{
     datet.textContent = dateNumber;       
 });
 
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else { 
+    console.log("Geolocation is not supported by this browser.");
+  }
+}
+
+function showPosition(position) {
+   lat = position.coords.latitude;
+   lng = position.coords.longitude;
+}
+
+
+
+
 // Get the circle element
 var circle1 = document.querySelector(".circle:nth-child(1)");
 var circle2 = document.querySelector(".circle:nth-child(2)");
@@ -39,7 +60,7 @@ const datet = document.querySelector('.circle:nth-child(2)');
 circle1.classList.add("month");
 circle2.classList.add("date");
 
-tHolder = suntimes(28.679079, 77.216721);
+tHolder = suntimes(lat, lng);
 
 rise = tHolder[0];
 set = tHolder[1];
